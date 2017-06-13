@@ -13,5 +13,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <!-- Strings related to welcome -->
     <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="title_register_button">Register</string>
+    <string name="title_login_button">Login</string>
 </resources>
