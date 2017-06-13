@@ -9,24 +9,27 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.drew.wheresmystuff.LoginActivity"
+    tools:context="com.example.drew.wheresmystuff.controllers.LoginActivity"
     android:weightSum="1">
 
     <ImageView
         android:id="@+id/imgWMSLogo"
         android:layout_width="353dp"
         android:layout_height="174dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@mipmap/ic_launcher"
+        android:contentDescription="Logo for the Application" />
 
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
-        android:text="@string/title_register_button" />
+        android:text="@string/title_register_button"
+        android:onClick="onRegisterPressed"/>
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
-        android:text="@string/title_login_button" />
+        android:text="@string/title_login_button"
+        android:onClick="onLoginPressed"/>
 </LinearLayout>
