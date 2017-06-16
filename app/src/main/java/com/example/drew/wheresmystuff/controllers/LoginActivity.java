@@ -46,6 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         // Toast ErrorToast = new Toast();
     }
 
+    protected void onCancelPressed(View view) {
+        finish();
+    }
+
     /**
      * Shows the progress UI and hides the login form.
      */
