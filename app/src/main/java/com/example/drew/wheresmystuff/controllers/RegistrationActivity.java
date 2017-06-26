@@ -41,7 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cancel = new Intent(getApplicationContext(),HomeScreenActivity.class);
+                Intent cancel = new Intent(getApplicationContext(),WelcomeActivity.class);
                 startActivity(cancel);
             }
         });

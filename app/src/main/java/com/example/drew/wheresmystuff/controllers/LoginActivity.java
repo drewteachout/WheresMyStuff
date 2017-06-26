@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A login screen that offers login via email/password.
@@ -37,11 +38,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     protected void onLoginPressed(View view) {
-        Intent loginIntent = new Intent(this, HomeScreenActivity.class);
+        Intent loginIntent = new Intent(getApplicationContext(), HomeScreenActivity.class);
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-        if (email.equals("user") && password.equals("pass")) {
+        if (UserManager.myUserManager.validatePassword(email, password)) {
+            User.setCurrentUser(UserManager.myUserManager.getUser(email));
             startActivity(loginIntent);
+        } else {
+            Toast.makeText(LoginActivity.this, "Invalid Login",
+                    Toast.LENGTH_SHORT).show();
         }
         // Toast ErrorToast = new Toast();
     }
@@ -50,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCancelPressed(View view) {
         finish();
     }
+
 
     /**
      * Shows the progress UI and hides the login form.

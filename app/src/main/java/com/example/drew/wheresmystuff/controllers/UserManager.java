@@ -50,7 +50,7 @@ public class UserManager {
      * Checks to see if the given password is valid for the user with the given email
      * @param email the email of the user trying to log in
      * @param password the password we are checking
-     * @return true if the password is correct, false if it is not or if the given user doesn't exist
+     * @return true if the password is correct
      */
     public boolean validatePassword(String email, String password) {
         if (!users.containsKey(email)) {

@@ -25,7 +25,9 @@
         </activity>
         <activity android:name=".controllers.LoginActivity" />
         <activity android:name=".controllers.HomeScreenActivity" />
-        <activity android:name=".controllers.RegistrationActivity"></activity>
+        <activity android:name=".controllers.RegistrationActivity" />
+        <activity android:name=".controllers.LostItemReportActivity" />
+        <activity android:name=".controllers.viewItemReports"></activity>
     </application>
 
 </manifest>
