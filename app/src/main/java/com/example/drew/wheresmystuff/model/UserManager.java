@@ -10,11 +10,7 @@ public class UserManager {
 
 
     public static final UserManager myUserManager = new UserManager();
-    //single UserManager that holds all the users in the system
-
     public static User currentUser = null;
-    //this indicates the User currently logged in to the system
-    //if no one is logged in it holds null
 
     private final HashMap<String, User> users = new HashMap<>();
 

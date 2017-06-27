@@ -20,12 +20,18 @@ public class ViewItemReportsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_item_reports);
         TextView report_list = (TextView)findViewById(R.id.viewItemReports);
+        /**
+         * Dsiplays all submitted item reports
+         */
         Collection<ItemReport> reports = ItemReportManager.myItemReports.getAllReports();
         for(ItemReport report : reports) {
             report_list.append(report.toString());
             report_list.append("\n");
 
         }
+        /**
+         * Takes user back to home screen
+         */
         Button mReturnToMain = (Button) findViewById(R.id.returnToMain);
         mReturnToMain.setOnClickListener(new View.OnClickListener() {
             @Override

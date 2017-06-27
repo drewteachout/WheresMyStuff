@@ -45,7 +45,9 @@ public class LostItemReportActivity extends AppCompatActivity {
         mBuilder = new AlertDialog.Builder(this);
         item_category_spinner = (Spinner) findViewById(R.id.itemCategorySpinner);
 
-        /*Cancels reports and redirects back to Main Activity**/
+        /**
+         * Cancels report and redirects back to Home Screen without saving
+         */
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +57,9 @@ public class LostItemReportActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        /*Confirms item report submission and adds it to item report manager**/
+        /**
+         * Submits report if valid, displays error message if invalid
+         */
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +90,20 @@ public class LostItemReportActivity extends AppCompatActivity {
         });
 
     }
-    /*Checks that required submission fields are entered*/
+
+    /**
+     * Checks that all entries have a value
+     * @return if the submission is valid
+     */
     private boolean submissionAttempt() {
-        return ETitemName != null && ETitemDescription != null && ETlatitude != null && ETlongitude != null;
+        if (ETitemName.getText().toString().equals("") ||
+                ETitemDescription.getText().toString().equals("") ||
+                ETlatitude.getText().toString().equals("") ||
+                ETlongitude.getText().toString().equals("") ||
+                ETreward.getText().toString().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

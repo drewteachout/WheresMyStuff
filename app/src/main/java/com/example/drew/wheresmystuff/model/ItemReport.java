@@ -13,13 +13,22 @@ public class ItemReport {
     private String itemDescription;
     private double latitude;
     private double longitude;
-    private boolean itemFound;//item status
+    private boolean itemFound;
     private String category;
     private String reward;
-    private boolean lost; //is it found or not
+    private boolean lost;
     private String date;
     private int reportID;
 
+    /**
+     *
+     * @param itemName the item's name
+     * @param itemDescription the item's description
+     * @param latitude the item's latitude
+     * @param longitude the item's longitude
+     * @param category the item's category
+     * @param reward the reward offere for the item
+     */
     public ItemReport(String itemName, String itemDescription, double latitude, double longitude,
                       String category, String reward) {
         this.itemName = itemName;
@@ -98,10 +107,10 @@ public class ItemReport {
         String latEnding = (latitude > 0) ? "° North, " : "° South, ";
         String longEnding = (longitude > 0) ? "° East" : "° West";
 
-        return "Item Name: " + itemName
+        return category + ": " + itemName
                 + "\nLocation: " + Double.toString(latitude) + latEnding + Double.toString(longitude)
                 + longEnding
-                + "\n" + itemDescription
-                + "Item submitted by " + reporter.getName();
+                + "\nDescription: " + itemDescription
+                + "\nSubmitted by " + reporter.getEmail();
     }
 }

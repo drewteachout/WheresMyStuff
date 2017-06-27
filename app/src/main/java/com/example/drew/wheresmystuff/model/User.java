@@ -13,11 +13,13 @@ public class User {
     private static User currentUser;
 
 
-
-    //public User() {
-      //  super();
-    //}
-
+    /**
+     * User of the system
+     * @param name the user's name
+     * @param email the user's email
+     * @param password the user's password
+     * @param accountLocked the user's account status
+     */
     public User(String name, String email, String password, boolean accountLocked) {
         this.name = name;
         this.email = email;

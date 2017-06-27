@@ -39,6 +39,10 @@ public class LoginActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    /**
+     * Logs in user when credentials are valid
+     * @param view the current view
+     */
     protected void onLoginPressed(View view) {
         Intent loginIntent = new Intent(getApplicationContext(), HomeScreenActivity.class);
         String email = mEmailView.getText().toString();
