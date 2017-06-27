@@ -38,6 +38,9 @@ public class RegistrationActivity extends AppCompatActivity {
         userStatusSpinner = (Spinner) findViewById(R.id.registrationStatusSpinner);
         mBuilder = new AlertDialog.Builder(this);
 
+        /**
+         * Cancels registration attempt without adding user to the system
+         */
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +48,9 @@ public class RegistrationActivity extends AppCompatActivity {
                 startActivity(cancel);
             }
         });
-
+        /**
+         * Submits new user into system if inputs are all valid, diplays error message if not
+         */
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,11 +82,20 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Checks if registration inputs are valid
+     * @return if registration inputs are valid
+     */
     private boolean registrationAttempt() {
         return !(validEmail(ETemail.getText().toString()) && (ETpassword.getText().toString() != null)
                 && (ETname.getText().toString() != null));
     }
 
+    /**
+     * Determines if entered email is valid
+     * @param email the email to check
+     * @return whether or not email is valid
+     */
     private boolean validEmail(String email)
     {
         Pattern pattern;

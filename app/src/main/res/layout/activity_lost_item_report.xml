@@ -10,10 +10,12 @@
         android:id="@+id/itemName"
         android:layout_width="184dp"
         android:layout_height="54dp"
+        android:hint="Item Name"
+        android:gravity="top|left"
         android:ems="10"
         android:inputType="textPersonName"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="@+id/textView"
@@ -28,7 +30,7 @@
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="@+id/itemName"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintTop_toBottomOf="@+id/itemName"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/itemName"
@@ -36,8 +38,9 @@
 
     <EditText
         android:id="@+id/itemLongitude"
-        android:layout_width="73dp"
+        android:layout_width="56dp"
         android:layout_height="51dp"
+        android:gravity="top|left"
         android:ems="10"
         android:inputType="numberDecimal|numberSigned"
         tools:layout_constraintTop_creator="1"
@@ -59,23 +62,23 @@
         app:layout_constraintBottom_toTopOf="@+id/itemCategorySpinner"
         android:layout_marginStart="7dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="7dp" />
 
     <EditText
         android:id="@+id/itemLatitude"
-        android:layout_width="82dp"
+        android:layout_width="56dp"
         android:layout_height="51dp"
         android:ems="10"
+        android:gravity="top|left"
         android:inputType="numberDecimal|numberSigned"
         tools:layout_constraintTop_creator="1"
         android:layout_marginStart="15dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintTop_toTopOf="@+id/itemLongitude"
         app:layout_constraintLeft_toRightOf="@+id/itemLongitude"
-        android:layout_marginLeft="84dp"
-        android:layout_marginTop="-13dp" />
+        android:layout_marginLeft="15dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -88,12 +91,12 @@
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="97dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="3dp" />
+        android:layout_marginLeft="6dp" />
 
     <EditText
         android:id="@+id/itemReward"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="311dp"
+        android:layout_height="38dp"
         android:ems="10"
         android:inputType="textMultiLine"
         tools:layout_constraintTop_creator="1"
@@ -101,27 +104,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="3dp" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Item Description"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/itemDescription"
-        android:layout_marginStart="6dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="6dp"
-        android:layout_marginBottom="-5dp" />
+        android:layout_marginTop="7dp" />
 
     <EditText
         android:id="@+id/itemDescription"
-        android:layout_width="310dp"
-        android:layout_height="115dp"
+        android:layout_width="301dp"
+        android:layout_height="118dp"
         android:ems="10"
+        android:hint="Item Description"
+        android:gravity="top|left"
         android:inputType="textMultiLine"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintBottom_creator="1"
@@ -131,51 +123,38 @@
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="71dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="-10dp"
+        android:layout_marginLeft="6dp"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintTop_toTopOf="@+id/itemLatitude" />
 
     <Button
         android:id="@+id/lostItemReportSubmitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="104dp"
+        android:layout_height="48dp"
         android:text="Submit"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         android:layout_marginStart="41dp"
         android:layout_marginEnd="39dp"
         app:layout_constraintRight_toRightOf="@+id/itemReward"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         app:layout_constraintTop_toBottomOf="@+id/itemReward"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="0.575" />
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <Button
         android:id="@+id/lostItemReportCancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="115dp"
+        android:layout_height="48dp"
         android:text="Cancel"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginEnd="54dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="2dp"
-        android:layout_marginRight="88dp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Item Name"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="16dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="6dp" />
+        android:layout_marginBottom="-2dp"
+        android:layout_marginRight="57dp" />
 
     <TextView
         android:id="@+id/textView6"
@@ -192,15 +171,15 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="53dp"
+        android:layout_height="21dp"
         android:text="Latitude"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/itemLatitude"
         android:layout_marginStart="13dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="9dp"
         app:layout_constraintLeft_toLeftOf="@+id/itemLatitude"
-        android:layout_marginLeft="1dp" />
+        android:layout_marginLeft="11dp" />
 
 </android.support.constraint.ConstraintLayout>

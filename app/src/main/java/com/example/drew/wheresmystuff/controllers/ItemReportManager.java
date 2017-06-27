@@ -8,7 +8,6 @@ import java.util.HashMap;
  */
 
 public class ItemReportManager {
-    //single instance used by the whole app to keep track of item reports
     public static final ItemReportManager myItemReports = new ItemReportManager();
 
     private final HashMap<Integer, ItemReport> itemReports = new HashMap<>();
