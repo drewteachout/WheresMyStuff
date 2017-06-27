@@ -111,6 +111,6 @@ public class ItemReport {
                 + "\nLocation: " + Double.toString(latitude) + latEnding + Double.toString(longitude)
                 + longEnding
                 + "\nDescription: " + itemDescription
-                + "\nSubmitted by " + reporter.getEmail();
+                + "\nSubmitted by " + reporter.getName();
     }
 }
