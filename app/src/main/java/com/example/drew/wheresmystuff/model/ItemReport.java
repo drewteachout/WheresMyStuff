@@ -1,10 +1,7 @@
-package com.example.drew.wheresmystuff.controllers;
+package com.example.drew.wheresmystuff.model;
 
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
-import android.icu.util.ULocale;
-
-import java.util.Date;
 
 /**
  * Created by kvict on 6/22/2017.

@@ -1,4 +1,4 @@
-package com.example.drew.wheresmystuff.controllers;
+package com.example.drew.wheresmystuff.model;
 
 import java.util.Collection;
 import java.util.HashMap;

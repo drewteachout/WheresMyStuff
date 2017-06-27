@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.drew.wheresmystuff.R;
+import com.example.drew.wheresmystuff.model.User;
 
-import static com.example.drew.wheresmystuff.controllers.User.getCurrentUser;
+import static com.example.drew.wheresmystuff.model.User.getCurrentUser;
 
 public class HomeScreenActivity extends AppCompatActivity {
     TextView currentUser;
@@ -36,7 +37,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         viewItemReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), viewItemReports.class);
+                Intent i = new Intent(getApplicationContext(), ViewItemReportsActivity.class);
                 startActivity(i);
 
             }

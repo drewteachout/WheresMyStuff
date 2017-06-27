@@ -1,11 +1,20 @@
 <resources>
     <string name="app_name">WheresMyStuff</string>
+    <string name="app_name_full">Wheres My Stuff?</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
     <string name="action_cancel">Cancel</string>
+
+    <!-- Strings related to registration -->
+    <string name="prompt_name">Name</string>
+    <string name="action_register">Submit</string>
+    <string-array name="user_types">
+        <item>User</item>
+        <item>Admin</item>
+    </string-array>
 
     <!-- Strings related to welcome -->
     <string name="title_activity_welcome">WelcomeActivity</string>
@@ -20,10 +29,6 @@
         <item>To do 3</item>
     </string-array>
 
-    <string-array name="user_types">
-        <item>User</item>
-        <item>Admin</item>
-    </string-array>
     <string-array name="item_category">
         <item>Keepsake</item>
         <item>Heirloom</item>

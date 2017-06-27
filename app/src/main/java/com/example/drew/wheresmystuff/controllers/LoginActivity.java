@@ -6,6 +6,8 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import com.example.drew.wheresmystuff.R;
+import com.example.drew.wheresmystuff.model.User;
+import com.example.drew.wheresmystuff.model.UserManager;
 
 import android.os.Build;
 import android.os.Bundle;

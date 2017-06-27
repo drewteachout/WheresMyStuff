@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.drew.wheresmystuff.R;
+import com.example.drew.wheresmystuff.model.ItemReport;
+import com.example.drew.wheresmystuff.model.ItemReportManager;
 
 import java.util.Collection;
 
-public class viewItemReports extends AppCompatActivity {
+public class ViewItemReportsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

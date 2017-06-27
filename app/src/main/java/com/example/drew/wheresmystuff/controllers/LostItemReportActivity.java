@@ -11,6 +11,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.drew.wheresmystuff.R;
+import com.example.drew.wheresmystuff.model.ItemReport;
+import com.example.drew.wheresmystuff.model.ItemReportManager;
+import com.example.drew.wheresmystuff.model.User;
 
 
 public class LostItemReportActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.drew.wheresmystuff.controllers;
+package com.example.drew.wheresmystuff.model;
 
 /**
  * Created by kvict on 6/19/2017.

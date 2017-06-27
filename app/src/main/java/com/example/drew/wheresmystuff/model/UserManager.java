@@ -1,4 +1,4 @@
-package com.example.drew.wheresmystuff.controllers;
+package com.example.drew.wheresmystuff.model;
 
 import java.util.HashMap;
 
@@ -16,7 +16,7 @@ public class UserManager {
     //this indicates the User currently logged in to the system
     //if no one is logged in it holds null
 
-    private final HashMap<String, com.example.drew.wheresmystuff.controllers.User> users = new HashMap<>();
+    private final HashMap<String, User> users = new HashMap<>();
 
     /**
      * Checks to see if the UserManager contains a user with this email
@@ -33,7 +33,7 @@ public class UserManager {
      * @return the User with the given email, or null if there is no person with this email
      * in this UserManager
      */
-    public com.example.drew.wheresmystuff.controllers.User getUser(String email) {
+    public User getUser(String email) {
         return users.get(email);
     }
 
@@ -42,7 +42,7 @@ public class UserManager {
      * @param email the User's email
      * @param user the User object being put in
      */
-    public void putUser(String email, com.example.drew.wheresmystuff.controllers.User user) {
+    public void putUser(String email, User user) {
         users.put(email, user);
     }
 
