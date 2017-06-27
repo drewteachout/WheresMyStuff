@@ -41,12 +41,14 @@ public class RegistrationActivity extends AppCompatActivity {
         cancelButton = (Button) findViewById(R.id.registrationCancelButton);
         mBuilder = new AlertDialog.Builder(this);
 
+        // Populates the spinner with User and Admin options
         userStatusSpinner = (Spinner) findViewById(R.id.registrationStatusSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.user_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userStatusSpinner.setAdapter(adapter);
 
+        // Sets click action for cancel button
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +57,7 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
+        // Sets click action for submit button, goes to Home Screen
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,11 +89,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
+    // Checks if registration was valid or not
     private boolean registrationAttempt() {
         return !(validEmail(ETemail.getText().toString()) && (ETpassword.getText().toString() != null)
                 && (ETname.getText().toString() != null));
     }
 
+    //Checks validity of email
     private boolean validEmail(String email)
     {
         Pattern pattern;

@@ -23,34 +23,25 @@ public class HomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
         currentUser = (TextView)findViewById(R.id.currentUser);
-        currentUser.setText("WELCOME " + getCurrentUser().getName());
-
-        newLostItem = (Button) findViewById(R.id.submitLostItemReport);
-        newLostItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), LostItemReportActivity.class);
-                startActivity(i);
-            }
-        });
-        viewItemReports = (Button) findViewById(R.id.viewItemReportsButton);
-        viewItemReports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ViewItemReportsActivity.class);
-                startActivity(i);
-
-            }
-        });
+        currentUser.setText("Welcome " + getCurrentUser().getName());
     }
 
+    // Click method to perform logout function
     protected void onLogoutPressed(View view) {
         Intent logout = new Intent(this, WelcomeActivity.class);
         User.setCurrentUser(null);
         startActivity(logout);
     }
 
+    // Click method to got to new Lost Item
+    protected void onLostItemPressed(View view) {
+        Intent lostItemPressed = new Intent(getApplicationContext(), LostItemReportActivity.class);
+        startActivity(lostItemPressed);
+    }
 
-
-
+    // Click method to view lost items
+    protected void onViewItemReportsPressed(View view) {
+        Intent i = new Intent(getApplicationContext(), ViewItemReportsActivity.class);
+        startActivity(i);
+    }
 }

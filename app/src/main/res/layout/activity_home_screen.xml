@@ -66,19 +66,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Lost Item"
+        android:onClick="onLostItemPressed"
         tools:layout_constraintBottom_creator="1"
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="16dp"
         app:layout_constraintLeft_toRightOf="@+id/btnLogout"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="18dp" />
 
     <Button
         android:id="@+id/viewItemReportsButton"
         android:layout_width="122dp"
         android:layout_height="61dp"
         android:text="View Item Reports"
+        android:onClick="onViewItemReportsPressed"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/submitLostItemReport"
