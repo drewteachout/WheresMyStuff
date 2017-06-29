@@ -13,7 +13,7 @@ import com.example.drew.wheresmystuff.model.ItemReportManager;
 
 import java.util.Collection;
 
-public class ViewItemReportsActivity extends AppCompatActivity {
+public class LostItemsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +41,5 @@ public class ViewItemReportsActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-    }
-
-    private void doNothing() {
-        // Insert code here
     }
 }
