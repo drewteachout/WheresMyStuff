@@ -41,5 +41,12 @@ public class ViewItemReportsActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+    }
+
+    private void doNothing() {
+        // Insert code here
     }
 }
