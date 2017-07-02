@@ -35,13 +35,13 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     // Click method to got to new Lost Item
     protected void onLostItemPressed(View view) {
-        Intent lostItemPressed = new Intent(getApplicationContext(), ReportLostItemActivity.class);
+        Intent lostItemPressed = new Intent(this, ReportLostItemActivity.class);
         startActivity(lostItemPressed);
     }
 
     // Click method to view lost items
     protected void onViewItemReportsPressed(View view) {
-        Intent i = new Intent(getApplicationContext(), LostItemsActivity.class);
+        Intent i = new Intent(this, LostItemsActivity.class);
         startActivity(i);
     }
 }

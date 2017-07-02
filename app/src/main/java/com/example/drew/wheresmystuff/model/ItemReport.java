@@ -98,6 +98,12 @@ public class ItemReport {
 
     /**
      *
+     * @return the item's reward
+     */
+    public String getReward() {return reward;}
+
+    /**
+     *
      * @return the report's id
      */
     public int getReportID() {return reportID;}

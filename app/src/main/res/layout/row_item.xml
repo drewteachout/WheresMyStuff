@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/adapterName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="Name: Pictures of Mom"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black" />
+
+
+    <TextView
+        android:id="@+id/adapterType"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/adapterName"
+        android:layout_marginTop="5dp"
+        android:text="Type: Keepsake"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/adapterLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location: 11.0, 11.0"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/adapterName" />
+
+    <TextView
+        android:id="@+id/adapterReward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/adapterLocation"
+        android:layout_toRightOf="@+id/adapterType"
+        android:layout_marginTop="5dp"
+        android:text="Reward: $100"
+        android:textColor="@android:color/black" />
+
+
+</RelativeLayout>
