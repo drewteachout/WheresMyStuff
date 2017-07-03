@@ -28,10 +28,13 @@
         <item>To do 2</item>
         <item>To do 3</item>
     </string-array>
+    <string name="view_lost_items">View Lost Items</string>
+    <string name="report_lost_items">Report Lost Items</string>
 
     <!-- Strings related to reporting and searching lost items -->
     <string name="report_lost_item">Report Lost Item</string>
-
+    <string name="lost_items">Lost Items</string>
+    <string name="search">Search</string>
     <string-array name="item_category">
         <item>Keepsake</item>
         <item>Heirloom</item>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.drew.wheresmystuff.R;
@@ -13,17 +12,15 @@ import com.example.drew.wheresmystuff.model.User;
 import static com.example.drew.wheresmystuff.model.User.getCurrentUser;
 
 public class HomeScreenActivity extends AppCompatActivity {
-    TextView currentUser;
-    private Button newLostItem;
-    private Button viewItemReports;
+    TextView mCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        currentUser = (TextView)findViewById(R.id.currentUser);
-        currentUser.setText("Welcome " + getCurrentUser().getName());
+        mCurrentUser = (TextView)findViewById(R.id.currentUser);
+        mCurrentUser.setText("Welcome " + getCurrentUser().getName());
     }
 
     // Click method to perform logout function
@@ -41,7 +38,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     // Click method to view lost items
     protected void onViewItemReportsPressed(View view) {
-        Intent i = new Intent(this, LostItemsActivity.class);
-        startActivity(i);
+        Intent viewLostItems = new Intent(this, LostItemsActivity.class);
+        startActivity(viewLostItems);
     }
 }
