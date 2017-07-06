@@ -30,7 +30,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         startActivity(logout);
     }
 
-    // Click method to got to new Lost Item
+    // Click method to submit to new Lost Item
     protected void onLostItemPressed(View view) {
         Intent lostItemPressed = new Intent(this, ReportLostItemActivity.class);
         startActivity(lostItemPressed);
@@ -43,8 +43,14 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     // Click method to view found items screen
+    protected void onViewFoundItemsPressed(View view) {
+        Intent viewFoundItems = new Intent(getApplicationContext(), ViewFoundItemsActivity.class);
+        startActivity(viewFoundItems);
+    }
+
+    // Click method to submit a new Found Item
     protected void onFoundItemsPressed(View view) {
-        Intent foundItemsScreen = new Intent(getApplicationContext(), ViewFoundItemsActivity.class);
-        startActivity(foundItemsScreen);
+        Intent submitFoundItem = new Intent(getApplicationContext(), FoundItemsActivity.class);
+        startActivity(submitFoundItem);
     }
 }

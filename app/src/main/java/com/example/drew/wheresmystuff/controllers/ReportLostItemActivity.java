@@ -57,6 +57,7 @@ public class ReportLostItemActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
         /**
          * Submits report if valid, displays error message if invalid
          */
@@ -75,7 +76,7 @@ public class ReportLostItemActivity extends AppCompatActivity {
                         double longitude = Double.parseDouble(mLongitude.getText().toString());
 
                         ItemReport report = new ItemReport(mItemName.getText().toString(), mItemDescription.getText().toString(),
-                               latitude, longitude, String.valueOf(item_category_spinner.getSelectedItem()),
+                                latitude, longitude, String.valueOf(item_category_spinner.getSelectedItem()),
                                 mReward.getText().toString());
                         ItemReportManager.myItemReports.addReport(report);
                         Toast.makeText(ReportLostItemActivity.this, "Report Submitted",

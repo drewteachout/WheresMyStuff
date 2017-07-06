@@ -35,6 +35,8 @@
     <string name="report_lost_item">Report Lost Item</string>
     <string name="lost_items">Lost Items</string>
     <string name="search">Search</string>
+    <string name="found_items">Found Items</string>
+    <string name="report_found_item">Report Found Item</string>
     <string-array name="item_category">
         <item>Keepsake</item>
         <item>Heirloom</item>

@@ -57,6 +57,7 @@ public class FoundItemsActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
         /**
          * Submits report if valid, displays error message if invalid
          */
@@ -80,9 +81,8 @@ public class FoundItemsActivity extends AppCompatActivity {
                         ItemReportManager.myItemReports.addReport(report);
                         Toast.makeText(FoundItemsActivity.this, "Report Submitted",
                                 Toast.LENGTH_SHORT).show();
-                        Intent viewFoundItems = new Intent(getApplicationContext(),
-                                ViewFoundItemsActivity.class);
-                        startActivity(viewFoundItems);
+                        Intent x = new Intent(getApplicationContext(), HomeScreenActivity.class);
+                        startActivity(x);
 
                     }
                 }
