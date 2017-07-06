@@ -10,15 +10,15 @@ import android.text.TextUtils;
 import android.widget.ListView;
 
 import com.example.drew.wheresmystuff.R;
-import com.example.drew.wheresmystuff.model.ItemAdapter;
-import com.example.drew.wheresmystuff.model.ItemReport;
+import com.example.drew.wheresmystuff.model.FoundItemAdapter;
+import com.example.drew.wheresmystuff.model.FoundItemReport;
 import com.example.drew.wheresmystuff.model.ItemReportManager;
 
 import java.util.ArrayList;
 
 public class ViewFoundItemsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    private static ItemAdapter mAdapter;
+    private static FoundItemAdapter mAdapter;
     private ListView mListView;
     private SearchView mSearchView;
     private FloatingActionButton mNewFoundItemButton;
@@ -32,9 +32,9 @@ public class ViewFoundItemsActivity extends AppCompatActivity implements SearchV
         mSearchView = (SearchView) findViewById(R.id.searchView);
         mNewFoundItemButton = (FloatingActionButton) findViewById(R.id.newFoundItemButton);
 
-        ArrayList<ItemReport> reports = ItemReportManager.myItemReports.getAllItemsList();
+        ArrayList<FoundItemReport> reports = ItemReportManager.myItemReports.getAllFoundItemsList();
 
-        mAdapter = new ItemAdapter(reports, R.layout.row_item, getApplicationContext());
+        mAdapter = new FoundItemAdapter(reports, R.layout.row_item, getApplicationContext());
         mListView.setAdapter(mAdapter);
 
         mListView.setTextFilterEnabled(true);

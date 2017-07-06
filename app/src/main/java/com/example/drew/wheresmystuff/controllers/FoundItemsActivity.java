@@ -11,7 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.drew.wheresmystuff.R;
-import com.example.drew.wheresmystuff.model.ItemReport;
+import com.example.drew.wheresmystuff.model.FoundItemReport;
 import com.example.drew.wheresmystuff.model.ItemReportManager;
 import com.example.drew.wheresmystuff.model.User;
 
@@ -75,10 +75,10 @@ public class FoundItemsActivity extends AppCompatActivity {
                         double latitude = Double.parseDouble(mLatitude.getText().toString());
                         double longitude = Double.parseDouble(mLongitude.getText().toString());
 
-                        ItemReport report = new ItemReport(mItemName.getText().toString(), mItemDescription.getText().toString(),
+                        FoundItemReport report = new FoundItemReport(mItemName.getText().toString(), mItemDescription.getText().toString(),
                                 latitude, longitude, String.valueOf(item_category_spinner.getSelectedItem()),
                                 mReward.getText().toString());
-                        ItemReportManager.myItemReports.addReport(report);
+                        ItemReportManager.myItemReports.addFoundReport(report);
                         Toast.makeText(FoundItemsActivity.this, "Report Submitted",
                                 Toast.LENGTH_SHORT).show();
                         Intent x = new Intent(getApplicationContext(), HomeScreenActivity.class);
