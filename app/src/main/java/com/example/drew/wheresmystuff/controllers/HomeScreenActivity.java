@@ -44,4 +44,10 @@ public class HomeScreenActivity extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(), ViewItemReportsActivity.class);
         startActivity(i);
     }
+
+    // Click method to view found items screen
+    protected void onFoundItemsPressed(View view) {
+        Intent foundItemsScreen = new Intent(getApplicationContext(), ViewFoundItemsActivity.class);
+        startActivity(foundItemsScreen);
+    }
 }
