@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Invalid Login",
                     Toast.LENGTH_SHORT).show();
         }
-        // Toast ErrorToast = new Toast();
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.drew.wheresmystuff.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -11,13 +12,16 @@ public class ItemReportManager {
     public static final ItemReportManager myItemReports = new ItemReportManager();
 
     private final HashMap<Integer, ItemReport> itemReports = new HashMap<>();
-    public static ItemReport itemReport;
+    private final ArrayList<ItemReport> itemReportsList = new ArrayList<ItemReport>();
 
     /**
      * adds the report to this itemReportManager
      * @param itemReport the report to be added
      */
     public void addReport(ItemReport itemReport) {
+        if (itemReport != null) {
+            itemReportsList.add(itemReport);
+        }
         itemReports.put(itemReport.getReportID(), itemReport);
     }
 
@@ -37,4 +41,10 @@ public class ItemReportManager {
     public Collection<ItemReport> getAllReports() {
         return itemReports.values();
     }
+
+    /**
+     * Gets all the reports in this ReportManager but in an ArrayList
+     * @return an ArrayList of all the reports
+     */
+    public ArrayList<ItemReport> getAllItemsList() { return itemReportsList; }
 }
