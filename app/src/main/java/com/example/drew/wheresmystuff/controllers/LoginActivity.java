@@ -4,13 +4,20 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import com.example.drew.wheresmystuff.R;
 import com.example.drew.wheresmystuff.model.User;
 import com.example.drew.wheresmystuff.model.UserManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,11 +32,15 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
+
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.etxtEmail);
         mPasswordView = (EditText) findViewById(R.id.etxtPassword);
@@ -44,16 +55,21 @@ public class LoginActivity extends AppCompatActivity {
      * @param view the current view
      */
     protected void onLoginPressed(View view) {
-        Intent loginIntent = new Intent(getApplicationContext(), HomeScreenActivity.class);
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-        if (UserManager.myUserManager.validatePassword(email, password)) {
-            User.setCurrentUser(UserManager.myUserManager.getUser(email));
-            startActivity(loginIntent);
-        } else {
-            Toast.makeText(LoginActivity.this, "Invalid Login",
-                    Toast.LENGTH_SHORT).show();
-        }
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent loginIntent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+                            startActivity(loginIntent);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 

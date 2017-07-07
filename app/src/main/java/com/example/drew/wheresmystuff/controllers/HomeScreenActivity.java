@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.drew.wheresmystuff.R;
 import com.example.drew.wheresmystuff.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import static com.example.drew.wheresmystuff.model.User.getCurrentUser;
 
@@ -16,20 +18,26 @@ public class HomeScreenActivity extends AppCompatActivity {
     TextView currentUser;
     private Button newLostItem;
     private Button viewItemReports;
+    private FirebaseAuth mAuth;
+    private FirebaseUser cUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        mAuth = FirebaseAuth.getInstance();
+        cUser = mAuth.getCurrentUser();
+
         currentUser = (TextView)findViewById(R.id.currentUser);
-        currentUser.setText("Welcome " + getCurrentUser().getName());
+        currentUser.append(cUser.getEmail().toString());
+        //"Welcome " + getCurrentUser().getName()
     }
 
     // Click method to perform logout function
     protected void onLogoutPressed(View view) {
         Intent logout = new Intent(this, WelcomeActivity.class);
-        User.setCurrentUser(null);
+        mAuth.signOut();
         startActivity(logout);
     }
 

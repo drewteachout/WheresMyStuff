@@ -1,14 +1,17 @@
 package com.example.drew.wheresmystuff.controllers;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.drew.wheresmystuff.R;
 import com.example.drew.wheresmystuff.model.Admin;
@@ -17,6 +20,13 @@ import com.example.drew.wheresmystuff.model.UserManager;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -28,11 +38,15 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button cancelButton;
     private AlertDialog.Builder mBuilder;
 
+    private FirebaseAuth mAuth;
+    private String TAG = "registrationActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        mAuth = FirebaseAuth.getInstance();
 
         ETname = (EditText) findViewById(R.id.registrationName);
         ETemail = (EditText) findViewById(R.id.registrationEmail);
@@ -61,32 +75,31 @@ public class RegistrationActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (registrationAttempt()) {
-                    mBuilder.setTitle("Error invalid inputs");
-                    mBuilder.setMessage("Name, email, and password must be valid");
-                    mBuilder.show();
+                mAuth.createUserWithEmailAndPassword(ETemail.getText().toString(), ETpassword.getText().toString())
+                        .addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                //Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                if (task.isSuccessful()) {
+//                                    FirebaseUser user = mAuth.getCurrentUser();
+//                                    UserProfileChangeRequest dName = new UserProfileChangeRequest.Builder()
+//                                            .setDisplayName(ETname.toString())
+//                                            .build();
+//                                    user.updateProfile(dName);
+                                    Intent i = new Intent(getApplicationContext(), HomeScreenActivity.class);
+                                    startActivity(i);
+                                } else {
+                                    Toast.makeText(RegistrationActivity.this, R.string.auth_failed,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-                } else {
-                    Intent i = new Intent(getApplicationContext(), HomeScreenActivity.class);
-                    if (String.valueOf(userStatusSpinner.getSelectedItem()).equals("Admin")) {
-                        Admin admin = new Admin(ETname.getText().toString(),
-                                ETemail.getText().toString(), ETpassword.getText().toString(), false);
-                        UserManager.myUserManager.putUser(ETemail.getText().toString(), admin);
-                        User.setCurrentUser(admin);
-                        startActivity(i);
-                    } else {
-                        User user = new Admin(ETname.getText().toString(),
-                                ETemail.getText().toString(), ETpassword.getText().toString(), false);
-                        UserManager.myUserManager.putUser(ETemail.getText().toString(), user);
-                        User.setCurrentUser(user);
-                        startActivity(i);
-                    }
-
+                        });
                 }
-
-            }
-        });
-
+            });
     }
 
     // Checks if registration was valid or not

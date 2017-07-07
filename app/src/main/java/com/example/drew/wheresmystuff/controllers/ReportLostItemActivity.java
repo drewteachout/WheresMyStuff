@@ -14,6 +14,10 @@ import com.example.drew.wheresmystuff.R;
 import com.example.drew.wheresmystuff.model.ItemReport;
 import com.example.drew.wheresmystuff.model.ItemReportManager;
 import com.example.drew.wheresmystuff.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class ReportLostItemActivity extends AppCompatActivity {
@@ -28,12 +32,18 @@ public class ReportLostItemActivity extends AppCompatActivity {
     private Button mSubmitButton;
     private Button mCancelButton;
 
-
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseUser cUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_lost_item);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        cUser = mAuth.getCurrentUser();
 
         mItemName = (EditText) findViewById(R.id.itemName);
         mItemDescription = (EditText) findViewById(R.id.itemDescription);
@@ -67,25 +77,22 @@ public class ReportLostItemActivity extends AppCompatActivity {
                     mBuilder.setTitle("Error missing inputs");
                     mBuilder.setMessage("All fields must have value ");
                     mBuilder.show();
-
                 } else {
                     if (submissionAttempt()) {
-                        reporter = User.getCurrentUser();
+                        //reporter = User.getCurrentUser();
                         double latitude = Double.parseDouble(mLatitude.getText().toString());
                         double longitude = Double.parseDouble(mLongitude.getText().toString());
 
                         ItemReport report = new ItemReport(mItemName.getText().toString(), mItemDescription.getText().toString(),
                                latitude, longitude, String.valueOf(item_category_spinner.getSelectedItem()),
                                 mReward.getText().toString());
-                        ItemReportManager.myItemReports.addReport(report);
+                        mDatabase.child("items").child(report.getItemName()).setValue(report);
                         Toast.makeText(ReportLostItemActivity.this, "Report Submitted",
                                 Toast.LENGTH_SHORT).show();
                         Intent x = new Intent(getApplicationContext(), HomeScreenActivity.class);
                         startActivity(x);
-
                     }
                 }
-
             }
         });
 

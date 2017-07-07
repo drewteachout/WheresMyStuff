@@ -15,6 +15,7 @@
         <item>User</item>
         <item>Admin</item>
     </string-array>
+    <string name="auth_failed">Authentication failed</string>
 
     <!-- Strings related to welcome -->
     <string name="title_activity_welcome">WelcomeActivity</string>
