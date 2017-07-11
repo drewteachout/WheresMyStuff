@@ -12,7 +12,14 @@ import android.widget.ListView;
 import com.example.drew.wheresmystuff.R;
 import com.example.drew.wheresmystuff.model.FoundItemAdapter;
 import com.example.drew.wheresmystuff.model.FoundItemReport;
+import com.example.drew.wheresmystuff.model.ItemReport;
 import com.example.drew.wheresmystuff.model.ItemReportManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -22,17 +29,37 @@ public class ViewFoundItemsActivity extends AppCompatActivity implements SearchV
     private ListView mListView;
     private SearchView mSearchView;
     private FloatingActionButton mNewFoundItemButton;
+    private ArrayList<FoundItemReport> reports = new ArrayList<>();
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_found_items);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference("founditems");
+
         mListView = (ListView) findViewById(R.id.itemsList);
         mSearchView = (SearchView) findViewById(R.id.searchView);
         mNewFoundItemButton = (FloatingActionButton) findViewById(R.id.newFoundItemButton);
 
-        ArrayList<FoundItemReport> reports = ItemReportManager.myItemReports.getAllFoundItemsList();
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap: dataSnapshot.getChildren()) {
+                    FoundItemReport item = new FoundItemReport(snap.child("itemName").getValue().toString(), snap.child("itemDescription").getValue().toString(),
+                            snap.child("latitude").getValue(Double.class), snap.child("longitude").getValue(Double.class), snap.child("category").getValue().toString(),
+                            snap.child("reward").getValue().toString());
+                    reports.add(item);
+                    //Log.d("tag" ,dataSnapshot.getValue().toString());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         mAdapter = new FoundItemAdapter(reports, R.layout.row_item, getApplicationContext());
         mListView.setAdapter(mAdapter);

@@ -14,6 +14,8 @@ import com.example.drew.wheresmystuff.R;
 import com.example.drew.wheresmystuff.model.FoundItemReport;
 import com.example.drew.wheresmystuff.model.ItemReportManager;
 import com.example.drew.wheresmystuff.model.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class FoundItemsActivity extends AppCompatActivity {
@@ -28,12 +30,14 @@ public class FoundItemsActivity extends AppCompatActivity {
     private Button mSubmitButton;
     private Button mCancelButton;
 
-
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found_items);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mItemName = (EditText) findViewById(R.id.itemName);
         mItemDescription = (EditText) findViewById(R.id.itemDescription);
@@ -68,25 +72,22 @@ public class FoundItemsActivity extends AppCompatActivity {
                     mBuilder.setTitle("Error missing inputs");
                     mBuilder.setMessage("All fields must have value ");
                     mBuilder.show();
-
                 } else {
                     if (submissionAttempt()) {
-                        reporter = User.getCurrentUser();
+                        //reporter = User.getCurrentUser();
                         double latitude = Double.parseDouble(mLatitude.getText().toString());
                         double longitude = Double.parseDouble(mLongitude.getText().toString());
 
                         FoundItemReport report = new FoundItemReport(mItemName.getText().toString(), mItemDescription.getText().toString(),
                                 latitude, longitude, String.valueOf(item_category_spinner.getSelectedItem()),
                                 mReward.getText().toString());
-                        ItemReportManager.myItemReports.addFoundReport(report);
+                        mDatabase.child("founditems").child(report.getItemName()).setValue(report);
                         Toast.makeText(FoundItemsActivity.this, "Report Submitted",
                                 Toast.LENGTH_SHORT).show();
                         Intent x = new Intent(getApplicationContext(), HomeScreenActivity.class);
                         startActivity(x);
-
                     }
                 }
-
             }
         });
 

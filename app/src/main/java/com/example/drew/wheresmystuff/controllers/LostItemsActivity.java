@@ -1,5 +1,6 @@
 package com.example.drew.wheresmystuff.controllers;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +11,17 @@ import android.text.TextUtils;
 import android.widget.ListView;
 
 import com.example.drew.wheresmystuff.R;
+import com.example.drew.wheresmystuff.model.FoundItemReport;
 import com.example.drew.wheresmystuff.model.ItemAdapter;
 import com.example.drew.wheresmystuff.model.ItemReport;
 import com.example.drew.wheresmystuff.model.ItemReportManager;
+import com.example.drew.wheresmystuff.model.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -22,17 +31,39 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
     private ListView mListView;
     private SearchView mSearchView;
     private FloatingActionButton mNewLostItemButton;
+    private ArrayList<ItemReport> reports = new ArrayList<>();
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_items);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference("lostitems");
+
         mListView = (ListView) findViewById(R.id.itemsList);
         mSearchView = (SearchView) findViewById(R.id.searchView);
         mNewLostItemButton = (FloatingActionButton) findViewById(R.id.newLostItemButton);
 
-        ArrayList<ItemReport> reports = ItemReportManager.myItemReports.getAllItemsList();
+        //ArrayList<ItemReport> reports = ItemReportManager.myItemReports.getAllItemsList();
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap: dataSnapshot.getChildren()) {
+                    ItemReport item = new ItemReport(snap.child("itemName").getValue().toString(), snap.child("itemDescription").getValue().toString(),
+                            snap.child("latitude").getValue(Double.class), snap.child("longitude").getValue(Double.class), snap.child("category").getValue().toString(),
+                            snap.child("reward").getValue().toString());
+                    reports.add(item);
+                    //Log.d("tag" ,dataSnapshot.getValue().toString());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         mAdapter = new ItemAdapter(reports, R.layout.row_item, getApplicationContext());
         mListView.setAdapter(mAdapter);
