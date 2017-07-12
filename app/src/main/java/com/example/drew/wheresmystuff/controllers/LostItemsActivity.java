@@ -2,6 +2,7 @@ package com.example.drew.wheresmystuff.controllers;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.location.Address;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,9 @@ import com.example.drew.wheresmystuff.model.ItemAdapter;
 import com.example.drew.wheresmystuff.model.ItemReport;
 import com.example.drew.wheresmystuff.model.ItemReportManager;
 import com.example.drew.wheresmystuff.model.User;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LostItemsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -32,6 +37,8 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
     private SearchView mSearchView;
     private FloatingActionButton mNewLostItemButton;
     private ArrayList<ItemReport> reports = new ArrayList<>();
+
+    private GoogleMapViewFragment mapViewFragment;
 
     private DatabaseReference mDatabase;
 
@@ -76,6 +83,36 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
                 startActivity(add);
             }
         });
+
+        /*
+        Google Map prep and integration.  Unsure about where to hook this
+         */
+        //just adding in all the reports as markers by hand.  Since we don't need to reference the ID yet, can just use garbage
+        for(int i = 0; i < reports.size(); i++) {
+            ItemReport aReport = reports.get(i);
+            mapViewFragment.addMarker("rep" + i, aReport.getItemName(), aReport.getCategory(), new LatLng(aReport.getLatitude(), aReport.getLongitude()));
+        }
+        mapViewFragment.addListeners(
+                new GoogleMap.OnCameraMoveListener(){
+                    @Override
+                    public void onCameraMove() {
+                        //possibly only add in reports that are for the current locale to the map? or just a few or something, dunno.
+                    }
+                },
+                new GoogleMap.OnMapClickListener(){
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        //not really needed for this method
+                    }
+                },
+                new GoogleMap.OnMarkerClickListener(){
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        //display some text showing what marker was clicked?
+                        return true;
+                    }
+                }
+        );
 
 
         setupSearchView();

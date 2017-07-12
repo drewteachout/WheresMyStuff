@@ -1,6 +1,7 @@
 package com.example.drew.wheresmystuff.controllers;
 
 import android.content.Intent;
+import android.location.Address;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,10 +15,15 @@ import com.example.drew.wheresmystuff.R;
 import com.example.drew.wheresmystuff.model.ItemReport;
 import com.example.drew.wheresmystuff.model.ItemReportManager;
 import com.example.drew.wheresmystuff.model.User;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
 
 
 public class ReportLostItemActivity extends AppCompatActivity {
@@ -32,6 +38,8 @@ public class ReportLostItemActivity extends AppCompatActivity {
     private Button mSubmitButton;
     private Button mCancelButton;
 
+    private GoogleMapViewFragment mapViewFragment;
+
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseUser cUser;
@@ -44,6 +52,8 @@ public class ReportLostItemActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         cUser = mAuth.getCurrentUser();
+
+        //mapViewFragment = findViewById(R.id.mapViewFragment);
 
         mItemName = (EditText) findViewById(R.id.itemName);
         mItemDescription = (EditText) findViewById(R.id.itemDescription);
@@ -96,6 +106,43 @@ public class ReportLostItemActivity extends AppCompatActivity {
                 }
             }
         });
+        /*
+        Google Map prep and integration.  Unsure about where to hook this
+         */
+        mapViewFragment.addListeners(
+                new GoogleMap.OnCameraMoveListener(){
+                    @Override
+                    public void onCameraMove() {
+                        //lost items aren't reacting to camera being moved, no point interacting with it
+                    }
+                },
+                new GoogleMap.OnMapClickListener(){
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        //latlng refers to the lat,lng pair of where the screen was clicked
+                        Address address;
+                        String subtitle = "Unable to fetch address";
+                        String title = latLng.latitude + ", " + latLng.longitude;
+                        try {
+                            //attempt to reverse geo-code the address
+                            address = mapViewFragment.getAddressAtLatLng(latLng);
+                            if(address != null) {
+                                title = address.getAddressLine(0);
+                                subtitle = address.getAddressLine(1);
+                            }
+                        } catch (IOException ignored) {}
+                        mapViewFragment.addMarker("click",title,subtitle,latLng);
+                    }
+                },
+                new GoogleMap.OnMarkerClickListener(){
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        LatLng reportPosition = marker.getPosition();
+                        //set report's position to this latlng somehow.
+                        return true;
+                    }
+                }
+        );
 
     }
 
