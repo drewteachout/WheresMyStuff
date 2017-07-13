@@ -24,18 +24,23 @@ import java.util.List;
 
 public class GoogleMapViewFragment extends SupportMapFragment implements OnMapReadyCallback {
 
-    public boolean mapReady = false;
-
-    private GoogleMap map;
+    private GoogleMap map = null;
     private Geocoder geocoder;
     private HashMap<String, Marker> mapMarkers;
 
+    private GoogleMap.OnCameraMoveListener cml;
+    private GoogleMap.OnMapClickListener mcl;
+    private GoogleMap.OnMarkerClickListener mkcl;
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mapReady = true;
         mapMarkers = new HashMap<>();
         this.map = googleMap;
         this.geocoder = new Geocoder(getContext());
+        //add listeners
+        map.setOnCameraMoveListener(cml);
+        map.setOnMapClickListener(mcl);
+        map.setOnMarkerClickListener(mkcl);
         //default location setter
         //check if we have permission to get location
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -53,12 +58,19 @@ public class GoogleMapViewFragment extends SupportMapFragment implements OnMapRe
                 map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude())));
             }
         }
+
     }
 
-    public void addListeners(GoogleMap.OnCameraMoveListener cml, GoogleMap.OnMapClickListener mcl, GoogleMap.OnMarkerClickListener mkcl) {
-        map.setOnCameraMoveListener(cml);
-        map.setOnMapClickListener(mcl);
-        map.setOnMarkerClickListener(mkcl);
+    public void resetListeners(GoogleMap.OnCameraMoveListener cml, GoogleMap.OnMapClickListener mcl, GoogleMap.OnMarkerClickListener mkcl) {
+        if(map != null) {
+            map.setOnCameraMoveListener(cml);
+            map.setOnMapClickListener(mcl);
+            map.setOnMarkerClickListener(mkcl);
+        } else {
+            this.cml = cml;
+            this.mcl = mcl;
+            this.mkcl = mkcl;
+        }
     }
 
     public void addMarker(String id, String title, String subtitle, LatLng latLng){

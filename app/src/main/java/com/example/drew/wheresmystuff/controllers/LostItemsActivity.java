@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.text.TextUtils;
 import android.widget.ListView;
@@ -37,9 +38,7 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
     private SearchView mSearchView;
     private FloatingActionButton mNewLostItemButton;
     private ArrayList<ItemReport> reports = new ArrayList<>();
-
-    private GoogleMapViewFragment mapViewFragment;
-
+    private Button mapReports;
     private DatabaseReference mDatabase;
 
     @Override
@@ -49,6 +48,7 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
 
         mDatabase = FirebaseDatabase.getInstance().getReference("lostitems");
 
+        mapReports = (Button) findViewById(R.id.mapreports);
         mListView = (ListView) findViewById(R.id.itemsList);
         mSearchView = (SearchView) findViewById(R.id.searchView);
         mNewLostItemButton = (FloatingActionButton) findViewById(R.id.newLostItemButton);
@@ -72,6 +72,15 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
             }
         });
 
+        mapReports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent x = new Intent(getApplicationContext(), GoogleMapReportItemLocationActivity.class);
+                x.putExtra("reports",reports);
+                startActivity(x);
+            }
+        });
+
         mAdapter = new ItemAdapter(reports, R.layout.row_item, getApplicationContext());
         mListView.setAdapter(mAdapter);
 
@@ -87,33 +96,6 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
         /*
         Google Map prep and integration.  Unsure about where to hook this
          */
-        //just adding in all the reports as markers by hand.  Since we don't need to reference the ID yet, can just use garbage
-        for(int i = 0; i < reports.size(); i++) {
-            ItemReport aReport = reports.get(i);
-            mapViewFragment.addMarker("rep" + i, aReport.getItemName(), aReport.getCategory(), new LatLng(aReport.getLatitude(), aReport.getLongitude()));
-        }
-        mapViewFragment.addListeners(
-                new GoogleMap.OnCameraMoveListener(){
-                    @Override
-                    public void onCameraMove() {
-                        //possibly only add in reports that are for the current locale to the map? or just a few or something, dunno.
-                    }
-                },
-                new GoogleMap.OnMapClickListener(){
-                    @Override
-                    public void onMapClick(LatLng latLng) {
-                        //not really needed for this method
-                    }
-                },
-                new GoogleMap.OnMarkerClickListener(){
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        //display some text showing what marker was clicked?
-                        return true;
-                    }
-                }
-        );
-
 
         setupSearchView();
     }

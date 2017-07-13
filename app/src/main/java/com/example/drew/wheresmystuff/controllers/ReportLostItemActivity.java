@@ -24,9 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
+import java.util.Locale;
 
 
 public class ReportLostItemActivity extends AppCompatActivity {
+
+    public static final int REQUEST_CODE = 10000;
+
     private User reporter;
     private EditText mItemName;
     private EditText mItemDescription;
@@ -38,6 +42,7 @@ public class ReportLostItemActivity extends AppCompatActivity {
     private Button mSubmitButton;
     private Button mCancelButton;
 
+    private Button openMapButton;
     private GoogleMapViewFragment mapViewFragment;
 
     private DatabaseReference mDatabase;
@@ -46,6 +51,7 @@ public class ReportLostItemActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_lost_item);
 
@@ -62,6 +68,7 @@ public class ReportLostItemActivity extends AppCompatActivity {
         mReward = (EditText) findViewById(R.id.itemReward);
         mSubmitButton = (Button) findViewById(R.id.lostItemReportSubmitButton);
         mCancelButton = (Button) findViewById(R.id.lostItemReportCancelButton);
+        openMapButton = (Button) findViewById(R.id.openmapbutton);
         mBuilder = new AlertDialog.Builder(this);
         item_category_spinner = (Spinner) findViewById(R.id.itemCategorySpinner);
 
@@ -109,41 +116,23 @@ public class ReportLostItemActivity extends AppCompatActivity {
         /*
         Google Map prep and integration.  Unsure about where to hook this
          */
-        mapViewFragment.addListeners(
-                new GoogleMap.OnCameraMoveListener(){
-                    @Override
-                    public void onCameraMove() {
-                        //lost items aren't reacting to camera being moved, no point interacting with it
-                    }
-                },
-                new GoogleMap.OnMapClickListener(){
-                    @Override
-                    public void onMapClick(LatLng latLng) {
-                        //latlng refers to the lat,lng pair of where the screen was clicked
-                        Address address;
-                        String subtitle = "Unable to fetch address";
-                        String title = latLng.latitude + ", " + latLng.longitude;
-                        try {
-                            //attempt to reverse geo-code the address
-                            address = mapViewFragment.getAddressAtLatLng(latLng);
-                            if(address != null) {
-                                title = address.getAddressLine(0);
-                                subtitle = address.getAddressLine(1);
-                            }
-                        } catch (IOException ignored) {}
-                        mapViewFragment.addMarker("click",title,subtitle,latLng);
-                    }
-                },
-                new GoogleMap.OnMarkerClickListener(){
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        LatLng reportPosition = marker.getPosition();
-                        //set report's position to this latlng somehow.
-                        return true;
-                    }
-                }
-        );
+        openMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent x = new Intent(getApplicationContext(), GoogleMapReportItemLocationActivity.class);
+                startActivityForResult(x, REQUEST_CODE);
+            }
+        });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            LatLng location = data.getParcelableExtra("location");
+            mLatitude.setText(String.format(Locale.getDefault(),"%f", location.latitude));
+            mLongitude.setText(String.format(Locale.getDefault(),"%f", location.longitude));
+        }
     }
 
     /**

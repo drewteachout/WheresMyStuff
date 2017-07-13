@@ -3,11 +3,13 @@ package com.example.drew.wheresmystuff.model;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 
+import java.io.Serializable;
+
 /**
  * Created by kvict on 6/22/2017.
  */
 
-public class ItemReport {
+public class ItemReport implements Serializable{
     private User reporter;
     private String itemName;
     private String itemDescription;
