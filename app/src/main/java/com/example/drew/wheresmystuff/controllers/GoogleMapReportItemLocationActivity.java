@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.location.Address;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.drew.wheresmystuff.R;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
@@ -15,26 +18,14 @@ import java.io.IOException;
 
 public class GoogleMapReportItemLocationActivity extends AppCompatActivity{
 
-    GoogleMapViewFragment mapViewFragment;
+    private GoogleMapViewHandler mapViewHandler;
+    private SupportMapFragment mapFragment;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(null);
-        //android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        //mapViewFragment = (GoogleMapViewFragment) fragmentManager.findFragmentById(R.id.reportItemFragment);
-        GoogleMapViewFragment fragment = new GoogleMapViewFragment();
-        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .replace(R.id.create_report_mapfragment_container, fragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //fragments have already been started
-        mapViewFragment.resetListeners(
+        mapViewHandler = new GoogleMapViewHandler(getApplicationContext(),
                 new GoogleMap.OnCameraMoveListener(){
                     @Override
                     public void onCameraMove() {
@@ -50,13 +41,15 @@ public class GoogleMapReportItemLocationActivity extends AppCompatActivity{
                         String title = latLng.latitude + ", " + latLng.longitude;
                         try {
                             //attempt to reverse geo-code the address
-                            address = mapViewFragment.getAddressAtLatLng(latLng);
+                            address = mapViewHandler.getAddressAtLatLng(latLng);
                             if(address != null) {
                                 title = address.getAddressLine(0);
                                 subtitle = address.getAddressLine(1);
                             }
                         } catch (IOException ignored) {}
-                        mapViewFragment.addMarker("click",title,subtitle,latLng);
+                        mapViewHandler.removeMarker("click");
+                        mapViewHandler.addMarker("click",title,subtitle,latLng);
+                        mapViewHandler.mapMarkers.get("click").showInfoWindow();
                     }
                 },
                 new GoogleMap.OnMarkerClickListener(){
@@ -65,9 +58,27 @@ public class GoogleMapReportItemLocationActivity extends AppCompatActivity{
                         Intent intent = getIntent();
                         intent.putExtra("location",marker.getPosition());
                         setResult(RESULT_OK, intent);
+                        finish();
                         return true;
                     }
                 }
         );
+        /*
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        mapViewFragment = (GoogleMapViewFragment) fragmentManager.findFragmentById(R.id.reportItemFragment);
+        GoogleMapViewFragment fragment = new GoogleMapViewFragment();
+        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .replace(R.id.create_report_mapfragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+        */
+        setContentView(R.layout.activity_googlemap_report_item);
+        mapFragment = (SupportMapFragment) SupportMapFragment.newInstance();
+        // Then we add it using a FragmentTransaction.
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.create_report_mapfragment_container, mapFragment, "mapCreateReports");
+        fragmentTransaction.commit();
+        mapFragment.getMapAsync(mapViewHandler);
     }
 }

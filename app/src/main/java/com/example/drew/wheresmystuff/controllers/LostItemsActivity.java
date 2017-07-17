@@ -75,7 +75,7 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
         mapReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent x = new Intent(getApplicationContext(), GoogleMapReportItemLocationActivity.class);
+                Intent x = new Intent(getApplicationContext(), GoogleMapViewItemLocationsActivity.class);
                 x.putExtra("reports",reports);
                 startActivity(x);
             }
@@ -92,11 +92,6 @@ public class LostItemsActivity extends AppCompatActivity implements SearchView.O
                 startActivity(add);
             }
         });
-
-        /*
-        Google Map prep and integration.  Unsure about where to hook this
-         */
-
         setupSearchView();
     }
 

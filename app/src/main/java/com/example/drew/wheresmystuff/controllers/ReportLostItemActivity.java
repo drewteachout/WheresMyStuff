@@ -43,7 +43,6 @@ public class ReportLostItemActivity extends AppCompatActivity {
     private Button mCancelButton;
 
     private Button openMapButton;
-    private GoogleMapViewFragment mapViewFragment;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
