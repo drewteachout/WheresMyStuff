@@ -26,9 +26,9 @@ public class GoogleMapReportItemLocationActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(null);
         mapViewHandler = new GoogleMapViewHandler(getApplicationContext(),
-                new GoogleMap.OnCameraMoveListener(){
+                new GoogleMap.OnCameraMoveStartedListener(){
                     @Override
-                    public void onCameraMove() {
+                    public void onCameraMoveStarted(int i) {
                         //lost items aren't reacting to camera being moved, no point interacting with it
                     }
                 },
@@ -74,7 +74,7 @@ public class GoogleMapReportItemLocationActivity extends AppCompatActivity{
                 .commit();
         */
         setContentView(R.layout.activity_googlemap_report_item);
-        mapFragment = (SupportMapFragment) SupportMapFragment.newInstance();
+        mapFragment = SupportMapFragment.newInstance();
         // Then we add it using a FragmentTransaction.
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.create_report_mapfragment_container, mapFragment, "mapCreateReports");

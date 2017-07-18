@@ -18,24 +18,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class GoogleMapViewHandler implements OnMapReadyCallback {
+class GoogleMapViewHandler implements OnMapReadyCallback {
 
     private GoogleMap map = null;
     private Geocoder geocoder;
-    public HashMap<String, Marker> mapMarkers;
+    ConcurrentHashMap<String, Marker> mapMarkers;
 
     private final Context parentConext;
-    private final GoogleMap.OnCameraMoveListener cml;
+    private final GoogleMap.OnCameraMoveStartedListener cml;
     private final GoogleMap.OnMapClickListener mcl;
     private final GoogleMap.OnMarkerClickListener mkcl;
 
-    public final ArrayList<Runnable> onMapReadyExecutions = new ArrayList<>();
+    final ArrayList<Runnable> onMapReadyExecutions = new ArrayList<>();
 
-    public GoogleMapViewHandler(Context parentConext,
-                                GoogleMap.OnCameraMoveListener cml,
+    GoogleMapViewHandler(Context parentConext,
+                                GoogleMap.OnCameraMoveStartedListener cml,
                                 GoogleMap.OnMapClickListener mcl,
                                 GoogleMap.OnMarkerClickListener mkcl) {
         this.parentConext = parentConext;
@@ -46,7 +46,7 @@ public class GoogleMapViewHandler implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mapMarkers = new HashMap<>();
+        mapMarkers = new ConcurrentHashMap<>();
         this.map = googleMap;
         if(!onMapReadyExecutions.isEmpty()) {
             for(Runnable aTerribleIdea : onMapReadyExecutions) {
@@ -55,7 +55,7 @@ public class GoogleMapViewHandler implements OnMapReadyCallback {
         }
         this.geocoder = new Geocoder(parentConext);
         //add listeners
-        map.setOnCameraMoveListener(cml);
+        map.setOnCameraMoveStartedListener(cml);
         map.setOnMapClickListener(mcl);
         map.setOnMarkerClickListener(mkcl);
         //default location setter
@@ -78,15 +78,18 @@ public class GoogleMapViewHandler implements OnMapReadyCallback {
 
     }
 
-    public void addMarker(String id, String title, String subtitle, LatLng latLng){
+    void addMarker(String id, String title, String subtitle, LatLng latLng){
         //map.addMarker returns the marker, which is placed into the marker map
-        mapMarkers.put(id, map.addMarker(new MarkerOptions()
+        Marker temp = map.addMarker(new MarkerOptions()
                 .position(latLng)
                 .title(title)
-                .snippet(subtitle)));
+                .snippet(subtitle)
+        );
+        mapMarkers.put(id, temp);
+        temp.setVisible(true);
     }
 
-    public void removeMarker(String id) {
+    void removeMarker(String id) {
         Marker marker = mapMarkers.get(id);
         if(marker != null) {
             marker.remove();
@@ -97,11 +100,19 @@ public class GoogleMapViewHandler implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat,lng)));
     }
 
-    public Address getAddressAtLatLng(LatLng latlng) throws IOException {
+    Address getAddressAtLatLng(LatLng latlng) throws IOException {
         List<Address> out = geocoder.getFromLocation(latlng.latitude,latlng.longitude,1);
         if(out != null && !out.isEmpty()){
             return out.get(0);
         }
         return null;
+    }
+
+    public GoogleMap getRawMap() {
+        return map;
+    }
+
+    ConcurrentHashMap<String,Marker> getRawMapMarkers(){
+        return mapMarkers;
     }
 }

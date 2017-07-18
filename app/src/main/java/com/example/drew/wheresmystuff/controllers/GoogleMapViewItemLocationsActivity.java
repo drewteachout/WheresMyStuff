@@ -14,9 +14,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GoogleMapViewItemLocationsActivity extends AppCompatActivity{
 
@@ -33,10 +36,19 @@ public class GoogleMapViewItemLocationsActivity extends AppCompatActivity{
         Bundle args = getIntent().getExtras();
         reports = (ArrayList<ItemReport>) args.getSerializable("reports");
         mapViewHandler = new GoogleMapViewHandler(getApplicationContext(),
-                new GoogleMap.OnCameraMoveListener(){
+                new GoogleMap.OnCameraMoveStartedListener(){
                     @Override
-                    public void onCameraMove() {
-                        //possibly only add in reports that are for the current locale to the map? or just a few or something, dunno.
+                    public void onCameraMoveStarted(int i) {
+                        ConcurrentHashMap<String,Marker> markers = mapViewHandler.getRawMapMarkers();
+                        for(Map.Entry<String,ItemReport> entry : reportMap.entrySet()) {
+                            markers.remove(entry.getKey()).remove();
+                            mapViewHandler.addMarker(
+                                    entry.getKey(),
+                                    entry.getValue().getItemName(),
+                                    entry.getValue().getCategory(),
+                                    new LatLng(entry.getValue().getLatitude(),entry.getValue().getLongitude())
+                            );
+                        }
                     }
                 },
                 new GoogleMap.OnMapClickListener(){
@@ -80,11 +92,17 @@ public class GoogleMapViewItemLocationsActivity extends AppCompatActivity{
                 .commit();
         */
         setContentView(R.layout.activity_googlemap_view_reports);
-        mapFragment = (SupportMapFragment) SupportMapFragment.newInstance();
+        mapFragment = SupportMapFragment.newInstance();
         // Then we add it using a FragmentTransaction.
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.view_reports_mapfragment_container, mapFragment, "mapViewReports");
         fragmentTransaction.commit();
         mapFragment.getMapAsync(mapViewHandler);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
 }
