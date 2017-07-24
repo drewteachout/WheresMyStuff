@@ -1,9 +1,9 @@
 package com.example.drew.wheresmystuff.model;
 
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
+import java.text.SimpleDateFormat;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Created by kvict on 6/22/2017.
@@ -43,9 +43,11 @@ public class ItemReport implements Serializable{
         this.reward = reward;
         this.lost = true;
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        this.date = df.format(c.getTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        this.date = dateFormat.format(calendar.getTime());
+        //SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        //this.date = df.format(c.getTime());
         reportID = itemName.hashCode() + itemDescription.hashCode() + category.hashCode() + reward.hashCode();
 
     }
