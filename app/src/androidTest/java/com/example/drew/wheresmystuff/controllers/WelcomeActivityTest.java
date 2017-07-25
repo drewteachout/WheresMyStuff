@@ -30,7 +30,8 @@ public class WelcomeActivityTest {
 
     /**
      * Sofia Davalos - sdavalos3
-     * JUnit Espresso test to check whether the Register and Login Buttons are displayed correctly
+     * JUnit Espresso testing if the UI elements are properly anchored using a relative scheme for
+     * device compatibility.
      */
 
     @Rule
