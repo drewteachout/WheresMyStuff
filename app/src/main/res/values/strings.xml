@@ -45,4 +45,9 @@
         <item>Donation</item>
 
     </string-array>
+
+    <!-- Strings related to Facebook login -->
+    <string name="facebook_app_id">1498719150186949</string>
+    <string name="fb_login_protocol_scheme">fb1498719150186949</string>
+
 </resources>

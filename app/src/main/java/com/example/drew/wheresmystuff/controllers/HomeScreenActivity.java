@@ -1,15 +1,24 @@
 package com.example.drew.wheresmystuff.controllers;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.drew.wheresmystuff.R;
 import com.example.drew.wheresmystuff.model.User;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import static com.example.drew.wheresmystuff.model.User.getCurrentUser;
 
@@ -27,14 +36,15 @@ public class HomeScreenActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         cUser = mAuth.getCurrentUser();
 
-        mCurrentUser = (TextView)findViewById(R.id.currentUser);
-        mCurrentUser.setText("Welcome " + cUser.getEmail());
+        //mCurrentUser = (TextView)findViewById(R.id.currentUser);
+        //mCurrentUser.setText("Welcome " + cUser);
     }
 
     // Click method to perform logout function
     protected void onLogoutPressed(View view) {
-        Intent logout = new Intent(this, WelcomeActivity.class);
         mAuth.signOut();
+        LoginManager.getInstance().logOut();
+        Intent logout = new Intent(this, WelcomeActivity.class);
         startActivity(logout);
     }
 
@@ -61,4 +71,5 @@ public class HomeScreenActivity extends AppCompatActivity {
         Intent submitFoundItem = new Intent(getApplicationContext(), FoundItemsActivity.class);
         startActivity(submitFoundItem);
     }
+    
 }
