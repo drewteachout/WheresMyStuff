@@ -1,11 +1,21 @@
 <resources>
     <string name="app_name">WheresMyStuff</string>
+    <string name="app_name_full">Wheres My Stuff?</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
     <string name="action_cancel">Cancel</string>
+
+    <!-- Strings related to registration -->
+    <string name="prompt_name">Name</string>
+    <string name="action_register">Submit</string>
+    <string-array name="user_types">
+        <item>User</item>
+        <item>Admin</item>
+    </string-array>
+    <string name="auth_failed">Authentication failed</string>
 
     <!-- Strings related to welcome -->
     <string name="title_activity_welcome">WelcomeActivity</string>
@@ -19,4 +29,25 @@
         <item>To do 2</item>
         <item>To do 3</item>
     </string-array>
+    <string name="view_lost_items">View Lost Items</string>
+    <string name="report_lost_items">Report Lost Items</string>
+
+    <!-- Strings related to reporting and searching lost items -->
+    <string name="report_lost_item">Report Lost Item</string>
+    <string name="lost_items">Lost Items</string>
+    <string name="search">Search</string>
+    <string name="found_items">Found Items</string>
+    <string name="report_found_item">Report Found Item</string>
+    <string-array name="item_category">
+        <item>Keepsake</item>
+        <item>Heirloom</item>
+        <item>Misc</item>
+        <item>Donation</item>
+
+    </string-array>
+
+    <!-- Strings related to Facebook login -->
+    <string name="facebook_app_id">1498719150186949</string>
+    <string name="fb_login_protocol_scheme">fb1498719150186949</string>
+
 </resources>
